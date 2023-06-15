@@ -1,4 +1,4 @@
-# Ansible
+#  <img src="https://github.com/kmitsolution/DevOps/blob/main/Ansible/images/Ansible.png" width=100 height=100 /> Ansible
 Ansible is an open-source automation tool designed to simplify IT operations, configuration management, application deployment, and orchestration. It provides a simple, human-readable language for defining automation tasks and configurations, allowing users to manage infrastructure and automate repetitive tasks with ease.
 
 Here's an overview of the key aspects of Ansible:
