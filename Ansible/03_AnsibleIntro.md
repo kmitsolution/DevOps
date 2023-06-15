@@ -22,9 +22,11 @@ In simpler terms, an idempotent operation is one that can be repeated multiple t
 
 Here are a few key aspects of idempotency:
 
-1. <b>Consistent Desired State:</b> Idempotent operations help achieve a consistent desired state for systems. Each time an idempotent action is applied, the system moves closer to the desired configuration, ensuring that subsequent runs do not introduce any inconsistencies.
+<b>Consistent Desired State:</b> Idempotent operations help achieve a consistent desired state for systems. Each time an idempotent action is applied, the system moves closer to the desired configuration, ensuring that subsequent runs do not introduce any inconsistencies.
 2.<b>Repeatability and Safety:</b> Idempotent operations can be safely repeated or re-executed without worrying about adverse effects. This allows for easy recovery from failures, debugging, and rerunning of configuration management tasks.
+
 3.<b>No Unnecessary Changes:</b> Idempotent actions avoid unnecessary changes. If an action has already been applied and the system is in the desired state, reapplying the action will not cause any additional modifications or unnecessary overhead.
+
 4.<b>Efficiency:</b> Idempotency improves efficiency by minimizing the number of operations needed to achieve the desired state. Only the necessary changes or modifications are applied, reducing the workload and potential errors.
 
 In the context of Ansible, idempotency is a core principle. Ansible modules are designed to be idempotent, ensuring that the desired state is achieved consistently regardless of the number of times the playbook or tasks are executed. This allows Ansible to handle configuration drift, enforce desired configurations, and perform system management tasks reliably.
