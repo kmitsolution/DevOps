@@ -17,4 +17,4 @@
 ```
 ansible --version
 ```
-  Syntax: ansible --version
+  
