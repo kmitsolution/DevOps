@@ -18,17 +18,14 @@ Let's say you have two playbooks: main_playbook.yml and included_playbook.yml.
 ### included_playbook.yml:
 
 ```yaml
----
-- name: Included Playbook
-  hosts: all
-  tasks:
-    - name: Task 1
-      debug:
+- name: Task 1
+  debug:
         msg: "This is Task 1 in the included playbook"
 
-    - name: Task 2
-      debug:
+- name: Task 2
+  debug:
         msg: "This is Task 2 in the included playbook"
+
 ```
 
 In this example, the main_playbook.yml includes the included_playbook.yml using the include directive. When you run the main_playbook.yml, it will execute the tasks defined in the included_playbook.yml as part of the main playbook's execution.
