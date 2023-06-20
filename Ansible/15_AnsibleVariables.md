@@ -297,3 +297,151 @@ In this example, the playbook prints a message if the target host is running Ubu
 In this example, fact gathering is disabled for the play but explicitly enabled for the specific task.
 
 Fact variables provide a wealth of information about the target hosts, enabling you to make informed decisions and perform specific tasks based on system properties. They are accessible through the ansible_facts dictionary and can be used in conditionals, printed for debugging purposes, or utilized in various other ways to make your Ansible playbooks more powerful and adaptable.
+
+## Registered Variables
+In Ansible, registered variables are used to capture the output or result of a task and store it in a variable for later use within the playbook. They allow you to manipulate and access the task output to make decisions, perform conditional operations, or display information. Here's how registered variables work in Ansible:
+
+<b>Registering a Variable:</b> To register a variable, you can use the register keyword within a task. For example:
+
+```yaml
+---
+- name: Example Playbook with Registered Variable
+  hosts: all
+  become: true
+  tasks:
+    - name: Run a Command
+      command: echo "Hello, Ansible!"
+      register: command_output
+```
+
+In this example, the command_output variable is registered to capture the output of the echo command.
+
+<b>Accessing Registered Variables:</b> Registered variables are accessible using the registered variable's name. You can reference them using the <b>{{ registered_variable_name }}</b> syntax. For example:
+
+```yaml
+---
+- name: Example Playbook with Registered Variable
+  hosts: all
+  become: true
+  tasks:
+    - name: Run a Command
+      command: echo "Hello, Ansible!"
+      register: command_output
+
+    - name: Print Command Output
+      debug:
+        var: command_output.stdout
+```
+
+In this example, the command_output variable is accessed using the command_output.stdout syntax, which refers to the standard output of the registered command.
+
+<b>Using Registered Variables in Conditionals:</b> Registered variables are often used in conditionals to perform tasks based on the outcome of a previous task. For example:
+
+```yaml
+---
+- name: Example Playbook with Registered Variable
+  hosts: all
+  become: true
+  tasks:
+    - name: Run a Command
+      command: echo "Hello, Ansible!"
+      register: command_output
+
+    - name: Display Message if Command Output Contains "Hello"
+      debug:
+        msg: "Command output contains 'Hello'"
+      when: "'Hello' in command_output.stdout"
+```
+
+In this example, the conditional statement checks if the string "Hello" is present in the registered variable command_output.stdout. If it is, the message will be displayed.
+
+Registered variables allow you to capture and manipulate task output within your playbooks, providing flexibility and the ability to make decisions based on the task's result. They are accessed using the registered variable's name and can be used in subsequent tasks, conditionals, or debugging statements.
+
+## Environment Variables
+In Ansible, you can work with environment variables using the environment keyword. Environment variables provide a way to pass configuration or runtime information to Ansible and can be accessed within your playbooks. Here's how you can work with environment variables in Ansible:
+
+<b>Defining Environment Variables:</b> You can define environment variables at different levels, such as at the playbook level or within specific tasks. To define environment variables at the playbook level, you can use the environment keyword. For example:
+
+```yaml
+---
+- name: Example Playbook with Environment Variables
+  hosts: all
+  become: true
+  environment:
+    MY_VAR: "Hello, Ansible!"
+  tasks:
+    - name: Print Environment Variable
+      debug:
+        msg: "Value of MY_VAR: {{ lookup('env', 'MY_VAR') }}"
+```
+
+In this example, the environment variable MY_VAR is defined at the playbook level using the environment keyword. It can be accessed within tasks using the lookup function with the env plugin.
+
+<b>Accessing Environment Variables:</b> To access environment variables within your playbooks, you can use the lookup function with the env plugin. The lookup('env', 'VAR_NAME') syntax retrieves the value of the environment variable with the name VAR_NAME. For example:
+
+```yaml
+---
+- name: Example Playbook with Environment Variables
+  hosts: all
+  become: true
+  tasks:
+    - name: Print Environment Variable
+      debug:
+        msg: "Value of MY_VAR: {{ lookup('env', 'MY_VAR') }}"
+```
+
+In this example, the lookup function is used to access the value of the environment variable MY_VAR.
+
+<b>Setting Environment Variables for Tasks:</b> You can also set environment variables specifically for certain tasks using the environment keyword within the task definition. For example:
+
+```yaml
+---
+- name: Example Playbook with Task Environment Variables
+  hosts: all
+  become: true
+  tasks:
+    - name: Task 1
+      environment:
+        MY_VAR: "Hello, Ansible!"
+      debug:
+        msg: "Value of MY_VAR: {{ lookup('env', 'MY_VAR') }}"
+```
+
+In this example, the environment variable MY_VAR is defined specifically for the "Task 1" task using the environment keyword within the task definition.
+
+Environment variables in Ansible allow you to pass runtime information or configuration to your playbooks. They can be defined at the playbook level or within specific tasks using the environment keyword. You can access environment variables using the lookup function with the env plugin. This provides flexibility in customizing and adapting your playbooks based on the environment or external configuration.
+
+## Magic Variables
+In Ansible, magic variables are predefined variables that provide information about the system, play, host, or task being executed. These variables are automatically available for use in your playbooks and can be accessed without any additional configuration. Here are some commonly used magic variables in Ansible:
+
+1. <b>ansible_play_hosts:</b> A list of all the hosts being targeted by the play.
+2. <b>ansible_play_batch:</b> A list of hosts being targeted in the current batch (when running playbooks with serial or max_fail_percentage).
+3. <b>ansible_host:</b> The current host being targeted.
+4. <b>ansible_inventory_hostname:</b> The hostname as defined in the inventory.
+5. <b>inventory_hostname_short:</b> The short version of ansible_inventory_hostname.
+6. <b>ansible_playbook_name:</b> The name of the playbook being executed.
+7. <b>ansible_playbook_dir:</b> The directory path where the playbook is located.
+8. <b>ansible_parent_role_name:</b> The name of the parent role (when using role dependencies).
+9. <b>ansible_run_tags:</b> A list of tags being applied to the current execution.
+10. <b>ansible_skip_tags:</b> A list of tags that have been skipped during the execution.
+
+You can access these magic variables within your playbooks using the {{ variable_name }} syntax. For example:
+
+```yaml
+---
+- name: Example Playbook with Magic Variables
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Print Current Host
+      debug:
+        msg: "Current host: {{ ansible_host }}"
+
+    - name: Print Playbook Name
+      debug:
+        msg: "Playbook name: {{ ansible_playbook_name }}"
+```
+
+In this example, the ansible_host and ansible_playbook_name magic variables are accessed within separate tasks using the debug module. The values of these variables will be printed during playbook execution.
+
+Magic variables provide convenient access to useful information about the system, play, host, or task. They can be utilized to make dynamic decisions, customize playbook behavior, or display relevant information during playbook execution.
