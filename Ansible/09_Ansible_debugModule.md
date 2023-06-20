@@ -64,3 +64,66 @@ When you run this playbook, it will print the value of my_variable and the resul
 
 Note: The gather_facts: false line is included in this example to disable fact gathering from the remote hosts. Since this example is using localhost as the target, there is no need to gather facts.
 
+## Some More Exmaples
+
+### Example 1 
+```yaml
+---
+ - name: play for debug module
+   hosts: localhost
+   tasks:
+     - name: print a message using debug module
+       debug:
+         msg: "This is my first playbook execution"
+```
+
+### Example 2
+```yaml
+---
+ - name: play for debug module
+   hosts: localhost
+   tasks:
+     - name: print a message using debug module
+       debug:
+         msg: "This is my first playbook execution"
+```
+
+### Example 3
+```yaml
+---
+ - name: play for debug module
+   hosts: localhost
+   vars:
+     data: "Hello World"
+   tasks:
+     - name: print a message using debug module
+       debug:
+         msg: "This is my first playbook execution for {{ data }}"
+```
+
+### Example 4
+```yaml
+---
+ - name: play for debug module
+   hosts: localhost
+   tasks:
+     - name: find the up time of the system
+       command: uptime
+       register: output
+     - name: print uptime
+       debug:
+         var: output.stdout
+```
+### Example 5
+
+```yaml
+---
+ - name: play for debug module
+   hosts: dbservers
+   tasks:
+      - name: Display Multiple messages
+        debug:
+           msg:
+           - "This is message 1"
+           - "This is message 2"
+```
