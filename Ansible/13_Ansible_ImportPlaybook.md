@@ -59,17 +59,13 @@ Let's say you have two playbooks: main_playbook.yml and imported_playbook.yml.
 ### imported_playbook.yml:
 
 ```yaml
----
-- name: Imported Playbook
-  hosts: all
-  tasks:
-    - name: Task 1
-      debug:
-        msg: "This is Task 1 in the imported playbook"
+- name: Task 1
+  debug:
+        msg: "This is Task 1 in the included playbook"
 
-    - name: Task 2
-      debug:
-        msg: "This is Task 2 in the imported playbook"
+- name: Task 2
+  debug:
+        msg: "This is Task 2 in the included playbook"
 ```
 
 In this example, the main_playbook.yml imports the imported_playbook.yml using the import_playbook directive. When you run the main_playbook.yml, it will import and execute the tasks defined in the imported_playbook.yml as part of the main playbook's execution.
