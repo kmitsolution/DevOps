@@ -37,25 +37,28 @@ By default Ansible runs tasks synchronously, holding the connection to the remot
  # Example
 
 ```yaml
-- name: Run asynchronous task
-  command: sleep 15
-  async: 3600  # Maximum time to wait for task completion (in seconds)
-  poll: 10     # Polling interval (in seconds)
-  register: task_result
+---
+ - hosts: localhost
+   tasks:
+      - name: Run asynchronous task
+        command: sleep 15
+        async: 3600  # Maximum time to wait for task completion (in seconds)
+        poll: 0     # Polling interval (in seconds)
+        register: task_result
 
-- name: Wait for task to complete
-  async_status:
-    jid: "{{ task_result.ansible_job_id }}"
-  register: async_result
-  until: async_result.finished
-  retries: 60  # Maximum number of retries
-  delay: 10    # Delay between retries
+      - name: Wait for task to complete
+        async_status:
+         jid: "{{ task_result.ansible_job_id }}"
+        register: async_result
+        until: async_result.finished
+        retries: 60  # Maximum number of retries
+        delay: 10    # Delay between retries
 
-- name: Check task result
-  debug:
-    var: async_result
+      - name: Check task result
+        debug:
+         var: async_result
 ```    
-In this example, the command module is used to execute a long-running command, and the async option is set to 3600 seconds (1 hour) to allow enough time for the task to complete. The poll option is set to 10 seconds, which means Ansible will check the task status every 10 seconds.
+In this example, the command module is used to execute a long-running command, and the async option is set to 3600 seconds (1 hour) to allow enough time for the task to complete. The poll option is set to 0 seconds, which means Ansible will run the task in background
 
 The register keyword is used to capture the result of the command module in the task_result variable. Later, the async_status module is used to check the status of the asynchronous task using the jid (Job ID) obtained from task_result. The until keyword is used to specify the condition for waiting until the task is finished. In this case, async_result.finished is checked.
 
