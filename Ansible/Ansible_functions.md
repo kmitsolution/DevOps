@@ -30,8 +30,8 @@ Ansible provides several variable manipulation functions that allow you to modif
 
 2. <b>mandatory:</b>
 
-1. Usage: mandatory(value)
-2. Description: Raises an error if a variable is undefined or empty.
+#### Usage: mandatory(value)
+#### Description: Raises an error if a variable is undefined or empty.
 ### Example:
 ```yaml
 - name: Example using mandatory function
@@ -43,14 +43,13 @@ Ansible provides several variable manipulation functions that allow you to modif
         fail_msg: "Variable 'some_variable' is mandatory but not defined."
 ```
 
-3. <b>combine:</b>
-
-1. Usage: combine(dict1, dict2, ...)
-2. Description: Combines two or more dictionaries into a single dictionary.
+###  <b>combine:</b>
+#### Usage: combine(dict1, dict2, ...)
+#### Description: Combines two or more dictionaries into a single dictionary.
 ### Example:
 ```yaml
 - name: Example using combine function
-  hosts: all
+  hosts: localhost
   vars:
     dict1:
       key1: value1
@@ -60,12 +59,16 @@ Ansible provides several variable manipulation functions that allow you to modif
     - name: Combine dictionaries
       set_fact:
         combined_dict: "{{ dict1 | combine(dict2) }}"
+    - name: Print dicitionary
+      debug:
+              msg: "{{ combined_dict }}"
+
 ```
 
-4. difference:
+### difference:
 
-1. Usage: difference(list1, list2)
-2. Description: Returns the difference between two lists or sets.
+#### Usage: difference(list1, list2)
+#### Description: Returns the difference between two lists or sets.
 ### Example:
 ```yaml
 - name: Example using difference function
@@ -79,10 +82,10 @@ Ansible provides several variable manipulation functions that allow you to modif
         diff_list: "{{ list1 | difference(list2) }}"
 ```
 
-5. <b>intersect:</b>
+### intersect
 
-1. Usage: intersect(list1, list2)
-2. Description: Returns the intersection of two lists or sets.
+#### Usage: intersect(list1, list2)
+#### Description: Returns the intersection of two lists or sets.
 ### Example:
 ```yaml
 - name: Example using intersect function
@@ -96,10 +99,10 @@ Ansible provides several variable manipulation functions that allow you to modif
         common_elements: "{{ list1 | intersect(list2) }}"
 ```
 
-6. <b>union:</b>
+### union
 
-1. Usage: union(list1, list2)
-2. Description: Returns the union of two lists or sets.
+#### Usage: union(list1, list2)
+#### Description: Returns the union of two lists or sets.
 ### Example:
 ```yaml
 - name: Example using union function
@@ -119,15 +122,23 @@ These are just a few examples of variable manipulation functions in Ansible. The
 
 Ansible provides various string functions that allow you to manipulate and transform strings within your playbooks. Here are some commonly used string functions in Ansible:
 
-1. <b>length:</b>
+### length:
 
 1. Usage: {{ my_string | length }}
 2. Description: Returns the length of a string.
 ### Example:
 ```yaml
-- name: Get length of a string
-  debug:
-    msg: "Length of my_string is {{ my_string | length }}"
+- name: Example using difference function
+  hosts: localhost
+  tasks:
+    - name: Reading the file
+      command: cat /tmp/string.txt
+      register: output
+    - name: Print number of characters
+      debug:
+              msg:
+              - "{{ output.stdout | length }}"
+
 ```
 
 2. <b>upper:</b>
@@ -136,9 +147,16 @@ Ansible provides various string functions that allow you to manipulate and trans
 2. Description: Converts a string to uppercase.
 ### Example:
 ```yaml
-- name: Convert string to uppercase
-  debug:
-    msg: "Uppercase string: {{ my_string | upper }}"
+- name: Example using difference function
+  hosts: localhost
+  tasks:
+    - name: Reading the file
+      command: cat /tmp/string.txt
+      register: output
+    - name: Print content in upper case
+      debug:
+              msg:
+              - "{{ output.stdout | upper }}"
 ```
 
 3. <b>lower:</b>
@@ -147,10 +165,16 @@ Ansible provides various string functions that allow you to manipulate and trans
 2. Description: Converts a string to lowercase.
 ### Example:
 ```yaml
-- name: Convert string to lowercase
-  debug:
-    msg: "Lowercase string: {{ my_string | lower }}"
-```
+- name: Example using difference function
+  hosts: localhost
+  tasks:
+    - name: Reading the file
+      command: cat /tmp/string.txt
+      register: output
+    - name: Print content in lowercase
+      debug:
+              msg:
+              - "{{ output.stdout | upper }}"```
 
 4. <b>replace:</b>
 
@@ -158,9 +182,16 @@ Ansible provides various string functions that allow you to manipulate and trans
 2. Description: Replaces occurrences of a substring in a string with another substring.
 ### Example:
 ```yaml
-- name: Replace substring in a string
-  debug:
-    msg: "Modified string: {{ my_string | replace('old', 'new') }}"
+- name: Example using difference function
+  hosts: localhost
+  tasks:
+    - name: Reading the file
+      command: cat /tmp/string.txt
+      register: output
+    - name: Print number of characters
+      debug:
+              msg:
+              - "{{ output.stdout | upper | lower | replace('is','was') | upper}}"
 ```
 
 5. <b>split:</b>
@@ -169,9 +200,16 @@ Ansible provides various string functions that allow you to manipulate and trans
 2. Description: Splits a string into a list based on a delimiter.
 ### Example:
 ```yaml
-- name: Split string into a list
-  debug:
-    msg: "Split list: {{ my_string | split(',') }}"
+- name: Example using difference function
+  hosts: localhost
+  tasks:
+    - name: Reading the file
+      command: cat /tmp/string.txt
+      register: output
+    - name: Print number of characters
+      debug:
+              msg:
+              - "{{ output.stdout | split(' ')}}"
 ```
 
 These are just a few examples of the string functions available in Ansible. They allow you to perform operations such as getting the length of a string, converting case, replacing substrings, using regular expressions, and splitting strings. Refer to the Ansible documentation for a complete list of string functions and their usage: Ansible Filters
