@@ -3,9 +3,17 @@
 By default Ansible stops executing tasks on a host when a task fails on that host. You can use ignore_errors to continue on in spite of the failure.
 
 ```
-- name: Do not count this as a failure
-  ansible.builtin.command: /bin/false
-  ignore_errors: true
+---
+ - hosts: localhost
+   tasks:
+       - name: Task1
+         command: date
+       - name: Task2
+         command: date1
+         ignore_errors: true
+       - name: Task3
+         command: date
+
 ```
 The ignore_errors directive only works when the task is able to run and returns a value of ‘failed’. It does not make Ansible ignore undefined variable errors, connection failures, execution issues (for example, missing packages), or syntax errors
 
