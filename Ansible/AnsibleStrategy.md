@@ -1,11 +1,11 @@
 # Ansible Strategy
 In Ansible, strategies refer to different approaches for executing tasks across multiple hosts. By default, Ansible uses the "linear" strategy, where tasks are executed sequentially on each host. However, Ansible provides several other strategies that can be used to optimize performance and parallelize task execution. Here are some commonly used Ansible strategies:
 
-1. ## Linear Strategy (default):
+ ## Linear Strategy (default):
 1. Ansible executes tasks in a linear order, one host at a time.
 2. It is simple and easy to understand but may not be the most efficient for large-scale deployments.
 
-2. ## Free Strategy:
+ ## Free Strategy:
 
 1. Tasks are executed on all hosts concurrently without any restrictions.
 2. Useful when tasks can run independently of each other and don't have any dependencies.
