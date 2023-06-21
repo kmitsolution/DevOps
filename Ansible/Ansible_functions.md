@@ -15,11 +15,17 @@ Ansible provides several variable manipulation functions that allow you to modif
 
 ```yaml
 - name: Example using default function
-  hosts: all
+  hosts: localhost
+  vars:
+          my_variable: 'Test'
   tasks:
     - name: Set default value for variable
       set_fact:
         my_variable: "{{ some_variable | default('default_value') }}"
+    - name: Print value of my_variable
+      debug:
+              msg: "{{ my_variable }}"
+
 ```
 
 2. <b>mandatory:</b>
