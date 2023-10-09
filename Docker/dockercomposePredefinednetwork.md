@@ -21,6 +21,9 @@ services:
       MYSQL_ROOT_PASSWORD: root_password
     networks:
       - my-custom-network
+networks:
+  my-custom-network:
+    external: true
 ```
 
 In this example:
